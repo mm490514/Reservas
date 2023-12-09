@@ -1,0 +1,20 @@
+.tabela{
+	margin-right: 40px; 
+	border:solid 1px #a8a8a8; 
+	padding:20px;
+
+}
+
+.tabela a{
+	text-decoration: none;
+}
+
+.footer#rodape{
+	border-top: 1px solid #333;
+	bottom: 0;
+	left: 0;
+	height: 40px;
+	position: fixed;
+	width: 100%;	
+}
+
