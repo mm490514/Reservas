@@ -50,14 +50,13 @@ if (@$_GET['pag'] == "") {
 	<meta name="author" content="Hugo Vasconcelos">
 	<title><?php echo $nome_sistema ?></title>
 
-	<link href="../img/logo-financeiro.png" rel="shortcut icon" type="image/x-icon">
+	<link href="../img/logo.png" rel="shortcut icon" type="image/x-icon">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
 
 	<link rel="stylesheet" type="text/css" href="../DataTables/datatables.min.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style.css" />
@@ -357,7 +356,7 @@ if (@$_GET['pag'] == "") {
 							</div>
 
 							<div id="divImgLogo" class="mt-4">
-								<img src="../img/logo-financeiro.png" width="100px" id="targetLogo">
+								<img src="../img/logo.png" width="100px" id="targetLogo">
 							</div>
 						</div>
 
@@ -368,7 +367,7 @@ if (@$_GET['pag'] == "") {
 							</div>
 
 							<div id="divImgIcone" class="mt-4">
-								<img src="../img/logo-financeiro.png" width="25px" id="targetIcone">
+								<img src="../img/logo.png" width="25px" id="targetIcone">
 							</div>
 						</div>
 

@@ -8,7 +8,9 @@ $ano_atual = Date('Y');
 $dataInicioMes = $ano_atual."-".$mes_atual."-01";
 
 
-$query = $pdo->query("SELECT q.numero, 
+$query = $pdo->query("SELECT 
+q.id_quarto,
+q.numero, 
 h.nome, 
 SUM(num_adulto + num_criancas) AS total_hospedes, 
 r.data_checkin, 
@@ -48,8 +50,8 @@ $res = $query->fetchAll(PDO::FETCH_ASSOC);
               ?>
             </p>
             <div class="card-body text-center">
-              <button type="button" class="btn btn-outline-success">Liberar</button>
-              <button type="button" class="btn btn-outline-primary">Manutenção</button>
+            <button type="button" class="btn btn-outline-success liberar-btn" data-quarto-id="<?php echo $quarto['id_quarto']; ?>">Liberar</button>
+            <button type="button" class="btn btn-outline-primary">Manutenção</button>
             </div>
           </div>
         </div>
@@ -57,6 +59,25 @@ $res = $query->fetchAll(PDO::FETCH_ASSOC);
     <?php } ?>
   </div>
 </div>
+
+<!-- Modal de confirmação -->
+<div class="modal fade" id="confirmarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmarModalLabel">Confirmar Liberação</h5>       
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja liberar este quarto?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="confirmarLiberar">Liberar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <?php
 // Função para retornar a classe do status
@@ -85,3 +106,41 @@ function getHeaderClass($status) {
     }
 }
 ?>
+<script>
+  $(document).ready(function() {
+    var quartoId;
+
+    // Ao clicar no botão de liberar, captura o ID do quarto e abre o modal
+    $('.liberar-btn').click(function() {
+      quartoId = $(this).data('quarto-id');
+      $('#confirmarModal').modal('show');
+    });
+
+    // Se confirmar a liberação, realiza a ação
+    $('#confirmarLiberar').click(function() {
+      $('#confirmarModal').modal('hide'); // Fecha o modal
+      // Executa a função para atualizar o status
+      alert(quartoId);
+      liberarQuarto(quartoId);
+    });
+
+    function liberarQuarto(id) {
+      $.ajax({
+        url: 'atualizar_status.php',
+        method: 'POST',        
+        data: { quartoId: id },
+        success: function(response) {
+          
+        },
+        error: function(xhr, status, error) {          
+        }
+      });
+    }
+
+    $('.modal-footer .btn-secondary').click(function() {
+      $('#confirmarModal').modal('hide');
+    });
+  });
+</script>
+
+
