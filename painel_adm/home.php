@@ -51,7 +51,7 @@ $res = $query->fetchAll(PDO::FETCH_ASSOC);
             </p>
             <div class="card-body text-center">
             <button type="button" class="btn btn-outline-success liberar-btn" data-quarto-id="<?php echo $quarto['id_quarto']; ?>">Liberar</button>
-            <button type="button" class="btn btn-outline-primary">Manutenção</button>
+            <button type="button" class="btn btn-outline-primary manutencao-btn" data-quarto-id="<?php echo $quarto['id_quarto']; ?>">Manutenção</button>            
             </div>
           </div>
         </div>
@@ -77,6 +77,47 @@ $res = $query->fetchAll(PDO::FETCH_ASSOC);
     </div>
   </div>
 </div>
+
+<!-- Modal de confirmação -->
+<div class="modal fade" id="confirmarManutencao" tabindex="-1" role="dialog" aria-labelledby="confirmarManutencaoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmarManutencaoLabel">Confirmar Masnutenção</h5>       
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja colocar este quarto em manutenção?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="confirmarManutencao">Manutenção</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Sucesso -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center w-100" id="successModalLabel">
+          <i class="bi bi-check-circle display-1 text-success d-block mx-auto"></i>
+        </h5>        
+      </div>
+      <div class="modal-body text-center">        
+        <p>Operação realizada com Sucesso!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 
 
 <?php
@@ -116,30 +157,68 @@ function getHeaderClass($status) {
       $('#confirmarModal').modal('show');
     });
 
+    $('.manutencao-btn').click(function() {
+      quartoId = $(this).data('quarto-id');
+      $('#confirmarManutencao').modal('show');
+    });
+
     // Se confirmar a liberação, realiza a ação
     $('#confirmarLiberar').click(function() {
-      $('#confirmarModal').modal('hide'); // Fecha o modal
+     $('#confirmarModal').modal('hide'); // Fecha o modal
       // Executa a função para atualizar o status
-      alert(quartoId);
+     
       liberarQuarto(quartoId);
     });
 
-    function liberarQuarto(id) {
+     // Se confirmar a liberação, realiza a ação
+     $('#confirmarManutencao').click(function() {
+     $('#confirmarManutencao').modal('hide'); // Fecha o modal
+      // Executa a função para atualizar o status
+     
+      manutencaoQuarto(quartoId);
+    });
+
+    function liberarQuarto(id) {      
       $.ajax({
         url: 'atualizar_status.php',
         method: 'POST',        
-        data: { quartoId: id },
-        success: function(response) {
-          
-        },
-        error: function(xhr, status, error) {          
-        }
+        data: { quartoId: id, status: 0 },
+        success: function(response) {               
+                
+                if (response) { 
+                  $('#successModal').modal('show');
+                } 
+            },
+            error: function(xhr, status, error) {          
+                
+            }
+      });
+    }
+
+    function manutencaoQuarto(id) {      
+      $.ajax({
+        url: 'atualizar_status.php',
+        method: 'POST',        
+        data: { quartoId: id, status: 2 },
+        success: function(response) {               
+                
+                if (response) { 
+                  $('#successModal').modal('show');
+
+                } 
+            },
+            error: function(xhr, status, error) {          
+                
+            }
       });
     }
 
     $('.modal-footer .btn-secondary').click(function() {
       $('#confirmarModal').modal('hide');
+      $('#successModal').modal('hide');
+      location.reload();
     });
+   
   });
 </script>
 

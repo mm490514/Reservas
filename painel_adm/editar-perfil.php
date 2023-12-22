@@ -11,9 +11,6 @@ $query = $pdo->query("SELECT * from usuarios where email = '$email'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_reg = @count($res);
 
-
-
-
 if($total_reg > 0){
 	$id_usu = $res[0]['id'];
 	if ($id_usu != $id){
@@ -22,17 +19,11 @@ if($total_reg > 0){
 	}
 }
 
-
-
 $query = $pdo->prepare("UPDATE usuarios SET nome = :nome, email = :email, senha = :senha WHERE id = '$id'");
 $query->bindValue(":email", "$email");
 $query->bindValue(":senha", "$senha");
 $query->bindValue(":nome", "$nome");
 $query->execute();
-
-
-
-
 
 echo 'Salvo com Sucesso';
 
