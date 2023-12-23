@@ -108,10 +108,8 @@ if (@$_GET['pag'] == "") {
 							Cadastros
 						</a>                     
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="index.php?pag=<?php echo $menu2 ?>">Hóspedes</a></li>
-							<li><a class="dropdown-item <?php echo $ocultar_menu ?>" href="index.php?pag=<?php echo $menu4 ?>">Usuários</a></li>													
-							<li><a class="dropdown-item <?php echo $ocultar_menu ?>" href="index.php?pag=<?php echo $menu5 ?>">Formas PGTO</a></li>
-                            <li><a class="dropdown-item <?php echo $ocultar_menu ?>" href="index.php?pag=<?php echo $menu6 ?>">Quartos</a></li>
+							<li><a class="dropdown-item" href="index.php?pag=<?php echo $menu2 ?>">Hóspedes</a></li>	
+							<li><a class="dropdown-item <?php echo $ocultar_menu ?>" href="index.php?pag=<?php echo $menu6 ?>">Quartos</a></li>
                             <li><a class="dropdown-item <?php echo $ocultar_menu ?>" href="index.php?pag=<?php echo $menu7 ?>">Categoria Quartos</a></li>
 						</ul>
 					</li>
