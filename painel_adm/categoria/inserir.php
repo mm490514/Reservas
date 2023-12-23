@@ -14,7 +14,7 @@ $id = @$_POST['id'];
 $query = $pdo->query("SELECT * from $pagina where nome = '$cp2'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_reg = @count($res);	
-$id_reg = @$res[0]['id_hospede'];
+$id_reg = @$res[0]['id_categoria'];
 if($total_reg > 0 and $id_reg != $id){
 	echo 'Esta categoria já está cadastrada!!';
 	exit();
