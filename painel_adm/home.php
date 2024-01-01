@@ -12,15 +12,21 @@ $query = $pdo->query("SELECT
 q.id_quarto,
 q.numero, 
 h.nome, 
-SUM(num_adulto + num_criancas) AS total_hospesdes, 
+SUM(num_adulto + num_criancas) AS total_hospedes, 
 r.data_checkin, 
 r.data_checkout, 
 q.status 
 FROM quarto q 
-LEFT JOIN reserva r ON r.id_quarto = q.id_quarto 
+LEFT JOIN (
+SELECT *
+FROM reserva
+WHERE CURRENT_DATE() BETWEEN data_checkin AND data_checkout
+AND status_reserva = 0
+) r ON r.id_quarto = q.id_quarto 
 LEFT JOIN hospede_reserva hr ON hr.id_reserva = r.id_reserva 
 LEFT JOIN hospede h ON h.id_hospede = hr.id_hospede
-GROUP BY q.numero, h.nome, r.data_checkin, r.data_checkout, q.status;
+GROUP BY q.numero, h.nome, r.data_checkin, r.data_checkout, q.status
+
 ");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -42,11 +48,12 @@ foreach ($resultados as $restatus) {
 }
 
 $querycheck = $pdo->query("SELECT 
-    SUM(CASE WHEN r.data_checkin = CURRENT_DATE THEN 1 ELSE 0 END) as total_entra_hoje,
-    SUM(CASE WHEN r.data_checkout = CURRENT_DATE THEN 1 ELSE 0 END) as total_sai_hoje
-    FROM reserva r
-    INNER JOIN quarto q ON q.id_quarto = r.id_quarto
-    WHERE q.status = '0'");
+SUM(CASE WHEN r.data_checkin = CURRENT_DATE THEN 1 ELSE 0 END) as total_entra_hoje,
+SUM(CASE WHEN r.data_checkout = CURRENT_DATE AND q.status = '1' THEN 1 ELSE 0 END) as total_sai_hoje
+FROM reserva r
+INNER JOIN quarto q ON q.id_quarto = r.id_quarto
+WHERE q.status = '0' OR (q.status = '1' AND r.data_checkout = CURRENT_DATE)
+");
 $resultado = $querycheck->fetch(PDO::FETCH_ASSOC);
 
 $total_entra_hoje = $resultado['total_entra_hoje'];
@@ -219,13 +226,15 @@ function getStatusClass($status, $data_checkin, $data_checkout) {
     if ($status == 0) {
       if ($data_checkin == $dataAtual){
         return 'bg-info';
-      } else if ($data_checkout == $dataAtual){
-        return 'bg-warning';
-      } else {
+      }  else {
         return 'bg-success';
       }
     } elseif ($status == 1) {
-        return 'bg-danger';
+      if ($data_checkout == $dataAtual){
+        return 'bg-warning';
+      } else {
+        return 'bg-danger';        
+      }
     } elseif ($status == 2) {
         return 'bg-secondary';
     } else {
@@ -258,13 +267,11 @@ function getStatusClass($status, $data_checkin, $data_checkout) {
     $('.confirm-action').click(function() {
       var action = $(this).data('action');
       var status = $(this).data('status');
-
-      // Encontra o modal correspondente com base no atributo 'data-action'
+      
       var modalID = '#confirmar' + action.charAt(0).toUpperCase() + action.slice(1);
       
-      $(modalID).modal('hide'); // Fecha o modal
+      $(modalID).modal('hide'); 
 
-      // Executa a função para atualizar o status
       atualizarStatus(quartoId, status);
     });
 
