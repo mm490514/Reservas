@@ -28,7 +28,7 @@ $menu6 = 'quarto';
 $menu7 = 'categoria';
 $menu8 = 'indicadores';
 $menu9 = 'reservas';
-$menu10 = 'lista_hospedagem';
+$menu10 = 'reserva';
 $menu11 = 'transacoes';
 $menu12 = 'caixa';
 $menu13 = 'relatorios';
@@ -118,8 +118,7 @@ if (@$_GET['pag'] == "") {
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 							Hospedagem
 						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="index.php?pag=<?php echo $menu9 ?>">Nova Reserva</a></li>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">							
 							<li><a class="dropdown-item" href="index.php?pag=<?php echo $menu10 ?>">Reservas</a></li>
                         </ul>
 					</li>

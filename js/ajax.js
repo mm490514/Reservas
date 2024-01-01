@@ -22,6 +22,7 @@ function inserir(){
     });
     myModal.show();
     limparCampos();
+    gerarCodigo();
 }
 
 
