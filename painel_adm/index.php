@@ -32,6 +32,7 @@ $menu10 = 'reserva';
 $menu11 = 'transacoes';
 $menu12 = 'caixa';
 $menu13 = 'relatorios';
+$menu14 = 'indicadores';
 
 if (@$_GET['pag'] == "") {
 	$pag = $menu1;
@@ -100,7 +101,11 @@ if (@$_GET['pag'] == "") {
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="index.php?pag=<?php echo $menu1 ?>">Home</a>
+						<a class="nav-link" aria-current="page" href="index.php?pag=<?php echo $menu1 ?>">Home</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" aria-current="page" href="index.php?pag=<?php echo $menu14?>">Indicadores</a>
 					</li>
 
 					<li class="nav-item dropdown">

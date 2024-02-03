@@ -111,7 +111,7 @@ require_once($pagina . "/campos.php");
 							<div class="col-md-3 col-sm-12">
 								<div class="mb-3">
 									<label for="exampleFormControlInput1" class="form-label">Hóspede</label>
-									<select class="form-select" aria-label="Default select example" name="<?php echo $campo3 ?>" id="<?php echo $campo3 ?>">
+									<select class="form-select" aria-label="Default select example" name="id_hospede" id="id_hospede">
 										<?php 
 										$query = $pdo->query("SELECT id_hospede, concat(nome, ' - ', cpf) as nomeh FROM hospede order by nome asc");
 										$res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -146,7 +146,7 @@ require_once($pagina . "/campos.php");
 								<div class="col-md-3 col-sm-12">
 									<div class="mb-3">
 										<label for="exampleFormControlInput1" class="form-label">Valor</label>
-										<input type="text" class="form-control" name="<?php echo $campo7 ?>" id="<?php echo $campo7 ?>" readonly required>
+										<input type="text" class="form-control" name="<?php echo $campo9 ?>" id="<?php echo $campo9 ?>" readonly required>
 									</div>
 								</div>
 

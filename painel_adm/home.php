@@ -14,18 +14,22 @@ q.numero,
 h.nome, 
 SUM(num_adulto + num_criancas) AS total_hospedes, 
 r.data_checkin, 
-r.data_checkout, 
+r.data_checkout,  
 q.status 
-FROM quarto q 
+FROM 
+quarto q 
 LEFT JOIN (
-SELECT *
-FROM reserva
-WHERE CURRENT_DATE() BETWEEN data_checkin AND data_checkout
-AND status_reserva = 0
+  SELECT *
+  FROM reserva
+  WHERE CURRENT_DATE() BETWEEN data_checkin AND data_checkout
+  AND status_reserva = 0
 ) r ON r.id_quarto = q.id_quarto 
 LEFT JOIN hospede_reserva hr ON hr.id_reserva = r.id_reserva 
 LEFT JOIN hospede h ON h.id_hospede = hr.id_hospede
-GROUP BY q.numero, h.nome, r.data_checkin, r.data_checkout, q.status
+GROUP BY 
+q.id_quarto, q.numero, h.nome, r.data_checkin, r.data_checkout, q.status
+ORDER BY q.numero;
+
 
 ");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);

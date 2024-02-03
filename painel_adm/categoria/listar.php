@@ -86,6 +86,8 @@ function limparCampos(){
 
 
 function mostrarDados(id, cp1, cp2){
+
+	
 	
 	$('#campo1').text(cp1);
 	$('#campo2').text(cp2);
