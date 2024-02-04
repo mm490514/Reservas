@@ -1,4 +1,4 @@
-**README - Sistema de Gerenciamento Hoteleiro**
+**README - Sistema de Reservas**
 
 Este README fornecerá uma visão geral do projeto, instruções de configuração e detalhes sobre sua estrutura.
 
