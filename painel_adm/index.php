@@ -127,27 +127,7 @@ if (@$_GET['pag'] == "") {
 							<li><a class="dropdown-item" href="index.php?pag=<?php echo $menu10 ?>">Reservas</a></li>
                         </ul>
 					</li>
-
-
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Movimentações
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="index.php?pag=<?php echo $menu12 ?>">Caixa - Movimentações</a></li>
-							<li><a class="dropdown-item" href="index.php?pag=<?php echo $menu11 ?>">Transações</a></li>	
-                        </ul>
-					</li>
-
-                    <li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Relatórios
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="index.php?pag=<?php echo $menu13 ?>">Perspectiva</a></li>							
-                        </ul>
-					</li>
-                </ul>
+				</ul>
 				<a class="navbar-brand" href="#"><img src="../img/logo.png" width="30px"></a>
 			</div>
 		</div>
