@@ -24,8 +24,7 @@ LEFT JOIN (
   WHERE CURRENT_DATE() BETWEEN data_checkin AND data_checkout
   AND status_reserva = 0
 ) r ON r.id_quarto = q.id_quarto 
-LEFT JOIN hospede_reserva hr ON hr.id_reserva = r.id_reserva 
-LEFT JOIN hospede h ON h.id_hospede = hr.id_hospede
+LEFT JOIN hospede h ON h.id_hospede = r.id_hospede
 GROUP BY 
 q.id_quarto, q.numero, h.nome, r.data_checkin, r.data_checkout, q.status
 ORDER BY q.numero;

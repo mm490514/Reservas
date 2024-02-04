@@ -40,8 +40,7 @@ FROM reserva
 WHERE CURRENT_DATE() BETWEEN data_checkin AND data_checkout
 AND status_reserva = 0
 ) r ON r.id_quarto = q.id_quarto 
-LEFT JOIN hospede_reserva hr ON hr.id_reserva = r.id_reserva 
-LEFT JOIN hospede h ON h.id_hospede = hr.id_hospede");
+LEFT JOIN hospede h ON h.id_hospede = r.id_hospede");
 $res = $query->fetch(PDO::FETCH_ASSOC);
 $hospedes = 0;
 if ($res) {

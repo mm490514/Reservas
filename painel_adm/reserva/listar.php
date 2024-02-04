@@ -35,9 +35,8 @@ for($i=0; $i < @count($res); $i++){
 		$cp6 = $res[$i]['valor'];
 		$cp7 = $res[$i]['num_reserva'];	
 		
-		$query1 = $pdo->query("SELECT h.nome as nome FROM hospede_reserva hr
-		inner join hospede h on h.id_hospede = hr.id_hospede
-		inner join reserva r on r.id_reserva = hr.id_reserva
+		$query1 = $pdo->query("SELECT h.nome as nome FROM hospede h
+		inner join reserva r on r.id_hospede = h.id_hospede
 		where r.id_reserva = $id");
 		$res1 = $query1->fetchAll(PDO::FETCH_ASSOC);
 		if(@count($res1) > 0){
@@ -60,8 +59,7 @@ echo <<<HTML
 	<td>{$cp4}</td>	
 	<td>{$status}</td>	
 	<td>{$cp6}</td>									
-	<td>
-	<a href="#" onclick="editar('{$id}', '{$cp1}', '{$cp2}', '{$cp3}', '{$cp4}', '{$cp5}', '{$cp6}', '{$cp7}')" title="Editar Registro">	<i class="bi bi-pencil-square text-primary"></i> </a>
+	<td>	
 	<a href="#" onclick="excluir('{$id}' , '{$cp1}')" title="Excluir Registro">	<i class="bi bi-trash text-danger"></i> </a>		
 	</td>
 	</tr>

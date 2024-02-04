@@ -86,48 +86,44 @@ require_once($pagina . "/campos.php");
 									</div>
 								</div>
 
-							
+								<div class="row">
+									<div class="col-md-3 col-sm-30" style="width: 100%;">
+										<div class="mb-3">
+											<label for="exampleFormControlInput1" class="form-label">Quartos Disponíveis</label>
+											<select class="form-select" aria-label="Default select example" name="<?php echo $campo8 ?>" id="<?php echo $campo8 ?>">
 
-								<div class="col-md-3 col-sm-15">
-									<div class="mb-3">
-										<label for="exampleFormControlInput1" class="form-label">Quartos Disponíveis</label>
-										<select class="form-select" aria-label="Default select example" name="<?php echo $campo8 ?>" id="<?php echo $campo8 ?>">
+											</select>
+										</div>
 
-										</select>
 									</div>
+									
+								</div>
 
+								<div class="col-md-3 col-sm-12">
+									<div class="mb-6">										
+										<button type="button" class="btn btn-success" onclick="buscar()" id="btn-buscar"><i class="bi bi-search"></i> Buscar</button>
+										
+									</div>
 								</div>
 
 								<div class="col-md-3 col-sm-12">
 									<div class="mb-3">
-										<label for="exampleFormControlInput1" class="form-label">Disponibilidade</label>
-										<button type="button" class="btn btn-success" onclick="buscar()" id="btn-buscar"><i class="bi bi-search"></i> Buscar</button>
+										
+										<button type="button" class="btn btn-success" onclick="calcular()" id="btn-buscar"><i class="bi bi-calculator"></i></i> Calcular</button>
 									</div>
 								</div>
+								
+								
 
 							</div>
 							<div class="row">
 
 							<div class="col-md-3 col-sm-12">
 								<div class="mb-3">
-									<label for="exampleFormControlInput1" class="form-label">Hóspede</label>
-									<select class="form-select" aria-label="Default select example" name="id_hospede" id="id_hospede">
-										<?php 
-										$query = $pdo->query("SELECT id_hospede, concat(nome, ' - ', cpf) as nomeh FROM hospede order by nome asc");
-										$res = $query->fetchAll(PDO::FETCH_ASSOC);
-										for($i=0; $i < @count($res); $i++){
-											foreach ($res[$i] as $key => $value){	}
-											$id_item = $res[$i]['id_hospede'];
-											$nome_item = $res[$i]['nomeh'];
-											?>
-											<option value="<?php echo $id_item ?>"><?php echo $nome_item ?></option>
-
-										<?php } ?>
-
-
-									</select>
+									<label for="exampleFormControlInput1" class="form-label">CPF Hóspede</label>
+									<input type="text" class="form-control" name="CPF" id="CPF" required>
 								</div>
-								</div>		
+							</div>		
 
 
 
@@ -146,16 +142,9 @@ require_once($pagina . "/campos.php");
 								<div class="col-md-3 col-sm-12">
 									<div class="mb-3">
 										<label for="exampleFormControlInput1" class="form-label">Valor</label>
-										<input type="text" class="form-control" name="<?php echo $campo9 ?>" id="<?php echo $campo9 ?>" readonly required>
+										<input type="text" class="form-control" name="<?php echo $campo6 ?>" id="<?php echo $campo6 ?>" readonly required>
 									</div>
-								</div>
-
-								<div class="col-md-3 col-sm-12">
-									<div class="mb-3">
-										<label for="exampleFormControlInput1" class="form-label">Diárias</label>
-										<button type="button" class="btn btn-success" onclick="calcular()" id="btn-buscar"><i class="bi bi-calculator"></i></i> Calcular</button>
-									</div>
-								</div>
+								</div>							
 
 							</div>
 
@@ -288,7 +277,27 @@ require_once($pagina . "/campos.php");
 
 <script>
 	$(document).ready(function() {
-
+		$('#CPF').on('input', function() {
+        var cpf = $(this).val();
+        
+        // Enviar CPF para o servidor usando AJAX
+        $.ajax({
+				url: 'verificar_cpf.php', // Replace with the correct path to your PHP script
+				type: 'POST',
+				data: { cpf: cpf },
+				success: function(response) {
+					// Update the input color based on the response
+					if (response.trim() === 'valido') {
+						$('#CPF').removeClass('is-invalid').addClass('is-valid');
+					} else {
+						$('#CPF').removeClass('is-valid').addClass('is-invalid');
+					}
+				},
+				error: function(xhr, status, error) {
+					console.error('AJAX request failed. Error: ' + error);
+				}
+			});
+    });
 	});
 
 	document.getElementById('data_checkin').addEventListener('keydown', function(e) {
@@ -315,7 +324,7 @@ require_once($pagina . "/campos.php");
 	}
 
 	function buscar() {
-    	var checkin = document.getElementById('data_checkin').value;
+		var checkin = document.getElementById('data_checkin').value;
 		var checkout = document.getElementById('data_checkout').value;
 		var numCriancas = document.getElementById('num_criancas').value;
 		var numAdulto = document.getElementById('num_adulto').value;
@@ -344,6 +353,37 @@ require_once($pagina . "/campos.php");
 					} else {						
 						$('#quarto').html('<option value="">Nenhum quarto disponível</option>');
 					}
+				},
+				error: function(xhr, status, error) {          
+					
+				}
+			});
+		}
+	}
+
+	function calcular() {
+    	var id_quarto = document.getElementById('quarto').value;
+		var checkin = document.getElementById('data_checkin').value;
+		var checkout = document.getElementById('data_checkout').value;		
+
+		if (checkin === '') {
+			alert('Por favor, preencha a data de checkin.');
+			return; 
+		} else if (checkout === '')	   {
+			alert('Por favor, preencha a data de checkout.');
+			return; 
+		}else if (id_quarto === '')	   {
+			alert('Por favor, selecione um aquarto.');
+			return; 
+		}else{
+			$.ajax({
+				url: 'calculo_diarias.php',
+				method: 'POST',        
+				data: { datacheckin: checkin, datacheckout: checkout, idQuarto: id_quarto},
+				success: function(response) {
+					if (response) {						
+						$('#valor').val(response);								
+					} 
 				},
 				error: function(xhr, status, error) {          
 					
